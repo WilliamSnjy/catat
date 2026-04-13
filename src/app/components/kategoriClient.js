@@ -63,8 +63,14 @@ export default function KategoriClient({ listKategori }){
                 }, 1500)
             }
         }catch (error){
-            console.error(error)
-            alert("gagal menghapus kategori")
+            setStatus({
+                open: true,
+                status: "error",
+                message: "Gagal menghapus data"
+            })
+            setTimeout(() => {
+                setStatus((prev) => ({ ...prev, open: false }))
+            }, 2000)
         }
     }
 

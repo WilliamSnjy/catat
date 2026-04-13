@@ -61,12 +61,14 @@ export default function FormKategori({
                 }, 1500)
             }
         } catch (error) {
-            console.error(error)
             setStatus({
                 open: true,
                 status: "error",
                 message: (mode === "add" ? "data gagal tersimpan" : "data gagal terupdate")
             })
+            setTimeout(() => {
+                setStatus((prev) => ({ ...prev, open: false }))
+            }, 2000)
         }
     }
 
