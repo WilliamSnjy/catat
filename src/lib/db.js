@@ -1,16 +1,16 @@
-// import { Pool } from 'pg';
+import { Pool } from 'pg';
 
-// const pool = new Pool({
-//     user: process.env.DB_USER,
-//     host: process.env.DB_HOST,
-//     database: process.env.DB_NAME,
-//     password: process.env.DB_PASS,
-//     port: process.env.DB_PORT
-// });
+const pool = new Pool({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASS,
+    port: process.env.DB_PORT
+});
 
-// export default pool;
+export default pool;
 
-"use server";
-import { neon } from "@neondatabase/serverless";
+// "use server";
+// import { neon } from "@neondatabase/serverless";
 
-export const sql = neon(process.env.DATABASE_URL);
+// export const sql = neon(process.env.DATABASE_URL);

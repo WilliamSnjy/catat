@@ -1,8 +1,9 @@
-import {sql} from "@/lib/db";
+import pool from "@/lib/db";
 
 export async function getKategori(){
-    const result = await sql
+    const result = await pool.query(
         `SELECT * FROM tbl_kategori`
-  
-    return result
+    )
+    
+    return result.rows
 }
