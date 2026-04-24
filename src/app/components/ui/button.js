@@ -13,7 +13,7 @@ export default function Button({
     return (
         <button
             onClick={onClick}
-            className={`py-2 px-4 ${variants[variant]} ${className}`}
+            className={`py-1 px-2 ${variants[variant]} ${className} sm:py-2 sm:px-4`}
         >
             {children}
         </button>

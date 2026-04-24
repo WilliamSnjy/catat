@@ -46,9 +46,9 @@ export default async function Home() {
       <Sidebar />
       <div className="p-5 flex flex-col gap-2">
         <h1 className="text-2xl font-bold">Dashboard</h1>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <CardHarian columns={header1} data={listDashboard.PH} keyField="id_pengeluaran"/>
-          <div className="flex flex-col gap-2">
+          <div className="w-full overflow-x-auto  flex flex-col gap-2">
             <CardBulanan title="Bulan" columns={header3} data={listDashboard.PB} keyField="total_bulan_ini"/>
             <CardBulanan title="Wajib Bulan" columns={header3} data={listDashboard.PWB} keyField="total_bulan_ini"/>
             <CardBulanan title="Non Wajib Bulan" columns={header3} data={listDashboard.PNWB} keyField="total_bulan_ini"/>

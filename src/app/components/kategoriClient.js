@@ -93,7 +93,7 @@ export default function KategoriClient({ listKategori }){
             header: "Aksi",
             accessor: "aksi",
             cell: (item) => (
-                <div>
+                <div className="flex flex-col sm:flex-row gap-2">
                     <Button 
                         onClick={() => handleEdit(item)}
                         variant="edit"
