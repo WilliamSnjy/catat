@@ -1,8 +1,6 @@
-import Sidebar from "../components/ui/sidebar";
 import CardHarian from "../components/cardHarian";
 import CardBulanan from "../components/cardBulanan";
 import CardChart from "../components/cardChart";
-
 
 async function getDashboard(){
     const res = await fetch(`${process.env.APP_URL}/api/pencatatan/dashboard`, {

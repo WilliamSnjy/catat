@@ -1,4 +1,3 @@
-import Sidebar from "../../components/ui/sidebar"
 import PencatatanClient from "../../components/pencatatanClient";
 
 async function getKategori(){

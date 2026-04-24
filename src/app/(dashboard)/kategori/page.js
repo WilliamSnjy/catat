@@ -1,4 +1,3 @@
-import Sidebar from "../../components/ui/sidebar";
 import KategoriClient from "../../components/kategoriClient";
 
 async function getKategori(){
