@@ -13,7 +13,6 @@ export default function CardChart({
 }) {
 
 const total = totalPengeluaran[0].total
-// const total = 3000000
 
 const persen = Math.min(
     (total / targetBulanan) * 100,

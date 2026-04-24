@@ -3,19 +3,23 @@
 import Button from "./ui/button"
 import Table from "./table"
 import FormKategori from "./formKategori"
+import Status from "./ui/status"
+import Confirm from "./ui/confirm"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 export default function KategoriClient({ listKategori }){
+    const [confirm, setConfirm] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [mode, setMode] = useState("add")
     const [selectedKategori, setSelectedKategori] = useState(null)
+    const [status, setStatus] = useState({
+        open: false,
+        status: "loading",
+        message: ""
+    })
 
     const router = useRouter()
-
-    const refreshPage = () => {
-        router.refresh()
-    }
 
     const handleTambah = () => {
         setMode("add")
@@ -29,12 +33,18 @@ export default function KategoriClient({ listKategori }){
         setShowModal(true)
     }
 
-    const handleDelete = async (id) => {
-        const confirmDelete = confirm(
-            "Apakah yakin ingin menghapus kategori ini?"
-        )
+    const handleClickDelete = (kategori) => {
+        setSelectedKategori(kategori)
+        setConfirm(true)
+    }
 
-        if(!confirmDelete) return
+    const handleDelete = async (id) => {
+        setConfirm(false)
+        setStatus({
+            open: true,
+            status: "loading",
+            message: "sedang menghapus data..."
+        })
 
         try {
             const res = await fetch(`/api/kategori/${id}`,{
@@ -42,12 +52,25 @@ export default function KategoriClient({ listKategori }){
             })
 
             if(res.ok){
-                alert("Berhasil menghapus kategori")
-                router.refresh()
+                setStatus({
+                    open: true,
+                    status: "success",
+                    message: "Berhasil menghapus data"
+                })
+                setTimeout(() => {
+                    setStatus((prev) => ({ ...prev, open: false }))
+                    router.refresh()
+                }, 1500)
             }
         }catch (error){
-            console.error
-            alert("gagal menghapus kategori")
+            setStatus({
+                open: true,
+                status: "error",
+                message: "Gagal menghapus data"
+            })
+            setTimeout(() => {
+                setStatus((prev) => ({ ...prev, open: false }))
+            }, 2000)
         }
     }
 
@@ -70,7 +93,7 @@ export default function KategoriClient({ listKategori }){
             header: "Aksi",
             accessor: "aksi",
             cell: (item) => (
-                <div>
+                <div className="flex flex-col sm:flex-row gap-2">
                     <Button 
                         onClick={() => handleEdit(item)}
                         variant="edit"
@@ -79,7 +102,7 @@ export default function KategoriClient({ listKategori }){
                         Edit
                     </Button>
                     <Button
-                        onClick={() => handleDelete(item.id_kategori)}
+                        onClick={() => handleClickDelete(item)}
                         variant="delete"
                     >
                         Delete
@@ -109,9 +132,24 @@ export default function KategoriClient({ listKategori }){
                     mode={mode}
                     dataKategori={selectedKategori}
                     onClose={() => setShowModal(false)}
-                    onSuccess={refreshPage}
                 />
             )}
+
+            <Status 
+                open={status.open}
+                status={status.status}
+                message={status.message}
+            />
+
+            <Confirm 
+                open={confirm}
+                title="Hapus Kategori"
+                message={`Yakin ingin menghapus ${selectedKategori?.kategori}?`}
+                confirmText="Hapus"
+                cancelText="Batal"
+                onConfirm={() => handleDelete(selectedKategori.id_kategori)}
+                onCancel={() => setConfirm(false)}
+            />
         </>
     )
 }

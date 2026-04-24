@@ -11,7 +11,7 @@ export default function CardBulanan({title, columns, data, keyField}){
 
     return (
         <div className={`p-2 flex flex-col rounded-sm ${bgColor} shadow-sm`}>
-            <div className="font-bold">
+            <div className="font-bold text-sm sm:text-base md:text-md">
                 Pengeluaran {title} : {""}
                 {new Date().toLocaleDateString("id-ID", {
                     month: "long",

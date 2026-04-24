@@ -2,9 +2,16 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Status from "./ui/status"
 
 export default function FormLogin(){
     const router = useRouter()
+
+    const [status, setStatus] = useState({
+        open: false,
+        status: "loading",
+        message: "",
+    })
 
     const [form, setForm] = useState({
         username: "",
@@ -21,6 +28,12 @@ export default function FormLogin(){
     const handleLogin = async (e) => {
 
         e.preventDefault();
+
+        setStatus({
+            open: true,
+            status: "loading",
+            message: "sedang memverifikasi akun..."
+        })
         const res = await fetch("/api/login", {
             method: "POST",
             headers: {
@@ -31,11 +44,24 @@ export default function FormLogin(){
 
         const data = await res.json()
 
-        if(res.ok){
-            alert("Login Berhasil")
-            router.push("/")
+        if(data.status !== 401){
+            setStatus({
+                open: true,
+                status: "success",
+                message: "Berhasil Login"
+            })
+            setTimeout(() => {
+                router.push("/")
+            }, 1000)
         }else {
-          alert(data.message)
+            setStatus({
+                open: true,
+                status: "error",
+                message: "Gagal Login, silahkan cek username dan password anda"
+            })
+            setTimeout(() => {
+                setStatus((prev) => ({ ...prev, open: false }))
+            }, 2000)
         }
     }
     return (
@@ -69,6 +95,12 @@ export default function FormLogin(){
         >
           Login
         </button>
+
+        <Status
+            open={status.open}
+            status={status.status}
+            message={status.message}
+        />
     </form>
     )
 }

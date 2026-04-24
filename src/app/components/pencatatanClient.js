@@ -5,17 +5,21 @@ import Table from "./table"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import FormPencatatan from "./formPencatatan"
+import Status from "./ui/status"
+import Confirm from "./ui/confirm"
 
 export default function PencatatanClient({ listPencatatan, listKategori }){
+    const [confirm, setConfirm] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [mode, setMode] = useState("add")
     const [selectedPencatatan, setSelectedPencatatan] = useState(null)
+    const [status, setStatus] = useState({
+        open: false,
+        status: "loading",
+        message: ""
+    })
 
     const router = useRouter()
-
-    const refreshPage = () => {
-        router.refresh()
-    }
 
     const handleTambah = () => {
         setMode("add")
@@ -29,12 +33,18 @@ export default function PencatatanClient({ listPencatatan, listKategori }){
         setShowModal(true)
     }
 
-    const handleDelete = async (id) => {
-        const confirmDelete = confirm(
-            "Apakah yakin ingin menghapus transaksi ini?"
-        )
+    const handleClickDelete = (pencatatan) => {
+        setSelectedPencatatan(pencatatan)
+        setConfirm(true)
+    }
 
-        if(!confirmDelete) return
+    const handleDelete = async (id) => {
+        setConfirm(false)
+        setStatus({
+            open: true,
+            status: "loading",
+            message: "sedang menghapus data..."
+        })
 
         try{
             const res = await fetch(`/api/pencatatan/${id}`, {
@@ -42,12 +52,25 @@ export default function PencatatanClient({ listPencatatan, listKategori }){
             })
 
             if(res.ok){
-                alert("Berhasil menghapus transaksi")
-                router.refresh()
+                setStatus({
+                    open: true,
+                    status: "success",
+                    message: "Berhasil menghapus data"
+                })
+                setTimeout(() => {
+                    setStatus((prev) => ({ ...prev, open: false }))
+                    router.refresh()
+                }, 1500)
             }
         }catch (error){
-            console.error
-            alert("gagal menghapus transaksi")
+            setStatus({
+                open: true,
+                status: "error",
+                message: "Gagal menghapus data"
+            })
+            setTimeout(() => {
+                setStatus((prev) => ({ ...prev, open: false }))
+            }, 2000)
         }
     }
 
@@ -68,7 +91,7 @@ export default function PencatatanClient({ listPencatatan, listKategori }){
             header: "Aksi",
             accessor: "aksi",
             cell: (item) => (
-                <div>
+                <div className="flex flex-col sm:flex-row gap-2">
                     <Button 
                         onClick={() => handleEdit(item)}
                         variant="edit"
@@ -77,7 +100,7 @@ export default function PencatatanClient({ listPencatatan, listKategori }){
                         Edit
                     </Button>
                     <Button
-                        onClick={() => handleDelete(item.id_pengeluaran)}
+                        onClick={() => handleClickDelete(item)}
                         variant="delete"
                     >
                         Delete
@@ -108,9 +131,24 @@ export default function PencatatanClient({ listPencatatan, listKategori }){
                     dataPencatatan={selectedPencatatan}
                     listKategori={listKategori}
                     onClose={() => setShowModal(false)}
-                    onSuccess={refreshPage}
                 />
             )}
+
+            <Status 
+                open={status.open}
+                status={status.status}
+                message={status.message}
+            />
+
+            <Confirm 
+                open={confirm}
+                title="Hapus Kategori"
+                message={`Yakin ingin menghapus ${selectedPencatatan?.kategori}?`}
+                confirmText="Hapus"
+                cancelText="Batal"
+                onConfirm={() => handleDelete(selectedPencatatan.id_pengeluaran)}
+                onCancel={() => setConfirm(false)}
+            />
         </>
     )
 }

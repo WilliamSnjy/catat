@@ -1,14 +1,23 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import Status from "./ui/status"
 
 export default function FormPencatatan({
     mode="add",
     dataPencatatan = null,
     onClose,
-    onSuccess,
     listKategori
 }) {
+    const router = useRouter()
+
+    const [status, setStatus] = useState({
+        open: false,
+        status: "loading",
+        message: "",
+    })    
+
     const [form, setForm] = useState({
         tanggal: dataPencatatan?.tanggal || "",
         id_kategori: dataPencatatan?.id_kategori || "",
@@ -23,6 +32,11 @@ export default function FormPencatatan({
     }
 
     const handleSubmit = async () => {
+        setStatus({
+            open: true,
+            status: "loading",
+            message: (mode === "add" ? "sedang menyimpan data..." : "sedang mengupdate data...")
+        })
         try {
             const url =
                 mode === "add" ? "/api/pencatatan" : `/api/pencatatan/${dataPencatatan.id_pengeluaran}`
@@ -43,73 +57,92 @@ export default function FormPencatatan({
             })
 
             if(res.ok){
-                alert(mode === "add" ? "Berhasil tambah pencatatan" : "Berhasil edit pencatatan")
-                onClose()
-                onSuccess()
+                setStatus({
+                    open: true,
+                    status: "success",
+                    message: (mode === "add" ? "data berhasil tersimpan" : "data berhasil terupdate")
+                })
+                setTimeout(() => {
+                    onClose()
+                    router.refresh()
+                }, 1500)
             }
         }catch (error){
-            console.error(error)
-            alert(mode === "add" ? "Gagal tambah pencatatan" : "Gagal edit pencatatan")
+            setStatus({
+                open: true,
+                status: "error",
+                message: (mode === "add" ? "data gagal tersimpan" : "data gagal terupdate")
+            })
+            setTimeout(() => {
+                setStatus((prev) => ({ ...prev, open: false }))
+            }, 2000)
         }
     }
 
     return (
         <>
-            <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
-                <div className="bg-white p-6 rounded-xl w-96">
-                    <h2 className="text-xl font-bold mb-4">
-                        {mode === "add" ? "Tambah" : "Edit"} Pengeluaran
-                    </h2>
+            {!status.open && (
+                <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
+                    <div className="bg-white p-6 rounded-xl w-96">
+                        <h2 className="text-xl font-bold mb-4">
+                            {mode === "add" ? "Tambah" : "Edit"} Pengeluaran
+                        </h2>
 
-                    <div className="flex flex-col gap-3">
-                        <input
-                            type="date"
-                            value={form.tanggal}
-                            onChange={(e) => handleChange("tanggal", e.target.value)}
-                            className="border p-2 rounded"
-                        />
+                        <div className="flex flex-col gap-3">
+                            <input
+                                type="date"
+                                value={form.tanggal}
+                                onChange={(e) => handleChange("tanggal", e.target.value)}
+                                className="border p-2 rounded"
+                            />
 
-                        <select                                
-                            value={form.id_kategori}
-                            onChange={(e) => handleChange("id_kategori", e.target.value)}
-                            className="border p-2 rounded"
-                        >
-                            <option value="">Pilih Kategori</option>
-                            {listKategori.map((item) => (
-                                <option
-                                    key={item.id_kategori}
-                                    value={item.id_kategori}
-                                >
-                                    {item.kategori}
-                                </option>
-                            ))}
-                        </select>
+                            <select                                
+                                value={form.id_kategori}
+                                onChange={(e) => handleChange("id_kategori", e.target.value)}
+                                className="border p-2 rounded"
+                            >
+                                <option value="">Pilih Kategori</option>
+                                {listKategori.map((item) => (
+                                    <option
+                                        key={item.id_kategori}
+                                        value={item.id_kategori}
+                                    >
+                                        {item.kategori}
+                                    </option>
+                                ))}
+                            </select>
 
-                        <input 
-                            type="number"
-                            min="0"
-                            value={form.jumlah}
-                            onChange={(e) => handleChange("jumlah", e.target.value)}
-                            className="border p-2 rounded"
-                            placeholder="Nominal"
-                        />
-                    </div>
+                            <input 
+                                type="number"
+                                min="0"
+                                value={form.jumlah}
+                                onChange={(e) => handleChange("jumlah", e.target.value)}
+                                className="border p-2 rounded"
+                                placeholder="Nominal"
+                            />
+                        </div>
 
-                    <div className="flex justify-end gap-2 mt-4">
-                        <button
-                            onClick={onClose}
-                            className="px-4 py-2 bg-gray-200 rounded"
-                        >
-                            Batal
-                        </button>
-                        <button 
-                            onClick={handleSubmit}
-                            className="px-4 py-2 bg-green-500 text-white rounded">
-                            Simpan
-                        </button>
+                        <div className="flex justify-end gap-2 mt-4">
+                            <button
+                                onClick={onClose}
+                                className="px-4 py-2 bg-gray-200 rounded"
+                            >
+                                Batal
+                            </button>
+                            <button 
+                                onClick={handleSubmit}
+                                className="px-4 py-2 bg-green-500 text-white rounded">
+                                Simpan
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
+            <Status
+                open={status.open}
+                status={status.status}
+                message={status.message}
+            />
         </>
     )
 }
