@@ -1,5 +1,5 @@
-import Sidebar from "../components/ui/sidebar"
-import PencatatanClient from "../components/pencatatanClient";
+import Sidebar from "../../components/ui/sidebar"
+import PencatatanClient from "../../components/pencatatanClient";
 
 async function getKategori(){
     const res = await fetch(`${process.env.APP_URL}/api/kategori`, {
@@ -22,9 +22,7 @@ export default async function Pencatatan() {
     const listPencatatan = await getPencatatan()
     return (
         <div className="flex">
-            <Sidebar />
-
-            <div className="p-5 flex flex-col gap-6">
+            <div className="flex flex-col gap-6">
                 <div className="text-2xl font-bold">
                     Pencatatan
                 </div>

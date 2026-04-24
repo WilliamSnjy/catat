@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import LogoutButton from "../button/logoutButton"
 
-export default function Sidebar() {
+export default function Sidebar({ setStatus }) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -64,7 +64,7 @@ export default function Sidebar() {
           </li>
 
           <li className="hover:bg-gray-700 p-2 rounded">
-            <LogoutButton />
+            <LogoutButton setStatus={setStatus}/>
           </li>
         </ul>
       </div>

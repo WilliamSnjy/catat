@@ -1,5 +1,5 @@
-import Sidebar from "../components/ui/sidebar";
-import KategoriClient from "../components/kategoriClient";
+import Sidebar from "../../components/ui/sidebar";
+import KategoriClient from "../../components/kategoriClient";
 
 async function getKategori(){
   const res = await fetch(`${process.env.APP_URL}/api/kategori`, {
@@ -13,8 +13,7 @@ export default async function Kategori() {
   const listKategori = await getKategori();
   return (
      <div className="flex">
-      <Sidebar />
-      <div className="p-5 flex flex-col gap-6">
+      <div className="flex flex-col gap-6">
         <h1 className="text-2xl font-bold">Kategori</h1>
         <KategoriClient listKategori={listKategori}/>
       </div>     

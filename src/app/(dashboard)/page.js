@@ -1,7 +1,8 @@
-import Sidebar from "./components/ui/sidebar";
-import CardHarian from "./components/cardHarian";
-import CardBulanan from "./components/cardBulanan";
-import CardChart from "./components/cardChart";
+import Sidebar from "../components/ui/sidebar";
+import CardHarian from "../components/cardHarian";
+import CardBulanan from "../components/cardBulanan";
+import CardChart from "../components/cardChart";
+
 
 async function getDashboard(){
     const res = await fetch(`${process.env.APP_URL}/api/pencatatan/dashboard`, {
@@ -43,8 +44,7 @@ export default async function Home() {
   const listDashboard = await getDashboard()
   return (
      <div className="flex">
-      <Sidebar />
-      <div className="p-5 flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <CardHarian columns={header1} data={listDashboard.PH} keyField="id_pengeluaran"/>
