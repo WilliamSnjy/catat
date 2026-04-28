@@ -28,13 +28,16 @@ export async function DELETE(request, {params}){
         await deleteKategori(id)
 
         return Response.json({
-            status: 201,
             message: "Kategori berhasil dihapus",
+        },
+        {
+            status: 201,
         })
     }catch (error){
         return Response.json({
-            status: 500,
-            error: error.message,
+            message: error.message,
+        },{
+            status: 409,
         })
     }
 }
