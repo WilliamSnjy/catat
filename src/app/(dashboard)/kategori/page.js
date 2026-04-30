@@ -1,7 +1,7 @@
 import KategoriClient from "../../components/kategoriClient";
 
 async function getKategori(){
-  const res = await fetch(`/api/kategori`, {
+  const res = await fetch(`${process.env.APP_URL}/api/kategori`, {
         cache: "no-store",
     })
     const data = await res.json()

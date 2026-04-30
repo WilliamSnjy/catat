@@ -3,7 +3,7 @@ import CardBulanan from "../components/cardBulanan";
 import CardChart from "../components/cardChart";
 
 async function getDashboard(){
-    const res = await fetch(`/api/pencatatan/dashboard`, {
+    const res = await fetch(`${process.env.APP_URL}/api/pencatatan/dashboard`, {
         cache: "no-store",
     })
     const data = await res.json()

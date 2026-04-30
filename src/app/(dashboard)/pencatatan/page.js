@@ -1,7 +1,7 @@
 import PencatatanClient from "../../components/pencatatanClient";
 
 async function getKategori(){
-    const res = await fetch(`/api/kategori`, {
+    const res = await fetch(`${process.env.APP_URL}/api/kategori`, {
         cache: "no-store",
     })
     const data = await res.json()
@@ -9,7 +9,7 @@ async function getKategori(){
 }
 
 async function getPencatatan(){
-    const res = await fetch(`/api/pencatatan`, {
+    const res = await fetch(`${process.env.APP_URL}/api/pencatatan`, {
         cache: "no-store",
     })
     const data = await res.json()
