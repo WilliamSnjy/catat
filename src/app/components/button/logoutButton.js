@@ -1,17 +1,7 @@
-"use client"
-
 import { useRouter } from "next/navigation"
-import { useState } from "react"
-import Status from "../ui/status"
 
-export default function LogoutButton() {
+export default function LogoutButton({ setStatus }) {
     const router = useRouter()
-
-    const [status, setStatus] = useState({
-        open: false,
-        status: "loading",
-        message: "",
-    })
 
     const handleLogout = async () => {
         setStatus({
@@ -44,11 +34,6 @@ export default function LogoutButton() {
             <button onClick={handleLogout}>
                 Logout
             </button>
-            <Status
-                open={status.open}
-                status={status.status}
-                message={status.message}
-            />
         </>
     )
 }

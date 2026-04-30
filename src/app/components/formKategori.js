@@ -30,6 +30,18 @@ export default function FormKategori({
     }
 
     const handleSubmit = async () => {
+        if(!form.kategori || !form.jenis){
+            setStatus({
+                open: true,
+                status: "error",
+                message: "Semua kolom wajib diisi"
+            })
+            setTimeout(() => {
+                setStatus((prev) => ({ ...prev, open: false }))
+            }, 2000)
+            return
+        }
+
         setStatus({
             open: true,
             status: "loading",

@@ -32,6 +32,30 @@ export default function FormPencatatan({
     }
 
     const handleSubmit = async () => {
+        if(!form.tanggal || !form.id_kategori || !form.jumlah){
+            setStatus({
+                open: true,
+                status: "error",
+                message: "Semua kolom wajib diisi"
+            })
+            setTimeout(() => {
+                setStatus((prev) => ({ ...prev, open: false }))
+            }, 2000)
+            return
+        }
+
+        if(Number(form.jumlah) < 0){
+            setStatus({
+                open: true,
+                status: "error",
+                message: "Jumlah harus lebih dari 0"
+            })
+            setTimeout(() => {
+                setStatus((prev) => ({ ...prev, open: false }))
+            }, 2000)
+            return
+        }
+
         setStatus({
             open: true,
             status: "loading",

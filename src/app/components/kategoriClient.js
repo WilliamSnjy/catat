@@ -51,6 +51,8 @@ export default function KategoriClient({ listKategori }){
                 method: "DELETE",
             })
 
+            const data = await res.json()
+
             if(res.ok){
                 setStatus({
                     open: true,
@@ -60,6 +62,15 @@ export default function KategoriClient({ listKategori }){
                 setTimeout(() => {
                     setStatus((prev) => ({ ...prev, open: false }))
                     router.refresh()
+                }, 1500)
+            }else{
+                setStatus({
+                    open: true,
+                    status: "error",
+                    message: data.message
+                })
+                setTimeout(() => {
+                    setStatus((prev) => ({ ...prev, open: false }))
                 }, 1500)
             }
         }catch (error){
