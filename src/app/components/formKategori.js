@@ -30,7 +30,7 @@ export default function FormKategori({
     }
 
     const handleSubmit = async () => {
-        if(!form.kategori || !form.jenis){
+        if(!form.kategori || form.jenis == null){
             setStatus({
                 open: true,
                 status: "error",

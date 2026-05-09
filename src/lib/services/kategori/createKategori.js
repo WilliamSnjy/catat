@@ -3,7 +3,7 @@ import {sql} from "@/lib/db";
 export async function createKategori(data){
     const {kategori, jenis} = data;
 
-    if(!kategori || !jenis){
+    if(!kategori || jenis == null){
         throw new Error("Semua kolom wajib diisi")
     }
 
