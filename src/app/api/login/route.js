@@ -10,7 +10,7 @@ export async function POST(request){
         [username]
     )
 
-    const user = result[0]
+    const user = result.rows[0]
 
     if(!user) {
         return NextResponse.json({
