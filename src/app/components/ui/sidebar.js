@@ -9,15 +9,12 @@ export default function Sidebar({ setStatus }) {
 
   return (
     <>
-      {/* TOP BAR (MOBILE) */}
       <div className="lg:hidden bg-gray-800 text-white p-4">
-        <h2 className="text-lg font-bold">Catat Yuks</h2>
         <button onClick={() => setOpen(!open)}>
           ☰
         </button>
       </div>
 
-      {/* OVERLAY */}
       {open && (
         <div
           className="fixed inset-0 bg-black/40 z-40 lg:hidden"
@@ -25,11 +22,10 @@ export default function Sidebar({ setStatus }) {
         />
       )}
 
-      {/* SIDEBAR */}
       <div
         className={`
           fixed top-0 left-0 z-50
-          w-64 min-h-screen bg-gray-800 text-white p-5
+          min-h-screen bg-gray-800 text-white p-5
           transform transition-transform duration-300
 
           ${open ? "translate-x-0" : "-translate-x-full"}
@@ -47,7 +43,7 @@ export default function Sidebar({ setStatus }) {
 
           <li className="hover:bg-gray-700 p-2 rounded">
             <Link href="/riwayat" onClick={() => setOpen(false)}>
-              Riwayat (On Progress)
+              Riwayat
             </Link>
           </li>
 
