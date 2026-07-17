@@ -1,16 +1,14 @@
-import pool from "@/lib/db";
+import {sql} from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request){
     try{
     const {username,password} = await request.json()
 
-    const result = await pool.query(
-        `SELECT * FROM tbl_user WHERE username = $1`,
-        [username]
-    )
+    const result = await sql
+        `SELECT * FROM tbl_user WHERE username = ${username}`;
 
-    const user = result.rows[0]
+    const user = result[0]
 
     if(!user) {
         return NextResponse.json({
