@@ -1,8 +1,10 @@
-import {sql} from "@/lib/db";
+import pool from "@/lib/db";
 
 export async function deletePencatatan(id){
-    const result = await sql
-        `DELETE FROM tbl_pengeluaran WHERE id_pengeluaran = ${id}`;
+    const result = await pool.query(
+        `DELETE FROM tbl_pengeluaran WHERE id_pengeluaran = $1`,
+        [id]
+    )
 
-    return result
+    return result.rows
 }

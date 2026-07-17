@@ -30,7 +30,7 @@ export default function FormKategori({
     }
 
     const handleSubmit = async () => {
-        if(!form.kategori || !form.jenis){
+        if(!form.kategori || form.jenis == null){
             setStatus({
                 open: true,
                 status: "error",
@@ -101,18 +101,18 @@ export default function FormKategori({
                                 className="border p-2 rounded"
                             />
 
-                            <select
-                                value={form.jenis === null ? "" : form.jenis.toString()}
-                                onChange={(e) =>
-                                    handleChange("jenis", e.target.value === "true")
-                                }
-                                className="border p-2 rounded"
-                            >
-                                <option value="">Pilih Jenis</option>
-                                <option value="true">Wajib</option>
-                                <option value="false">Non Wajib</option>
-                            </select>
-                        </div>
+                        <select
+                            value={form.jenis === null ? "" : form.jenis.toString()}
+                            onChange={(e) =>
+                                handleChange("jenis", e.target.value === "true")
+                            }
+                            className="border p-2 rounded"
+                        >
+                            <option value="">Pilih Jenis</option>
+                            <option value="true">Wajib</option>
+                            <option value="false">Non Wajib</option>
+                        </select>
+                    </div>
 
                         <div className="flex justify-end gap-2 mt-4">
                             <button

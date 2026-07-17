@@ -1,10 +1,16 @@
-import {sql} from "@/lib/db";
+import pool from "@/lib/db";
 
 export async function createKategori(data){
     const {kategori, jenis} = data;
 
-    const result = await sql
-        `INSERT INTO tbl_kategori (kategori, jenis) VALUES (${kategori},${jenis}) RETURNING *`;
+    if(!kategori || jenis == null){
+        throw new Error("Semua kolom wajib diisi")
+    }
 
-    return result[0]
+    const result = await pool.query(
+        `INSERT INTO tbl_kategori (kategori, jenis) VALUES ($1,$2) RETURNING *`,
+        [kategori, jenis]
+    )
+
+    return result.rows[0]
 }
