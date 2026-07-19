@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LogoutButton from "../button/logoutButton";
-import { FiEdit, FiHome, FiBookOpen,FiBookmark } from "react-icons/fi";
+import { FiEdit, FiHome, FiBookOpen, FiBookmark } from "react-icons/fi";
 
 export default function BottomNav({ setStatus }) {
   const pathname = usePathname();

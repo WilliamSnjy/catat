@@ -5,6 +5,7 @@ import Table from "./table"
 import { useRouter } from "next/navigation"
 import { useState, useMemo } from "react"
 import FormPencatatan from "./formPencatatan"
+import FloatingButton from "./button/floatingButton"
 import Status from "./ui/status"
 import Confirm from "./ui/confirm"
 
@@ -148,13 +149,19 @@ export default function PencatatanClient({ listPencatatan, listKategori, bulan, 
     ]
     return (
         <>
-            <Button
-                onClick={handleTambah}
-                variant="add"
-                className="max-w-3xs"
-            >
-                Tambah Pengeluaran                
-            </Button>
+            <div className="hidden sm:block">
+                <Button
+                    onClick={handleTambah}
+                    variant="add"
+                    className="max-w-3xs"
+                >
+                    Tambah Pencatatan
+                </Button>
+            </div>
+
+            <div className="block sm:hidden">
+                <FloatingButton onClick={handleTambah}/>
+            </div>
 
             <div className="flex flex-col sm:flex-row gap-2 w-full">
                 <select

@@ -11,7 +11,7 @@ async function getKategori(){
 export default async function Kategori() {
   const listKategori = await getKategori();
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col sm:gap-6">
       <KategoriClient listKategori={listKategori}/>
     </div>     
   );

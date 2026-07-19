@@ -5,6 +5,7 @@ import Table from "./table"
 import FormKategori from "./formKategori"
 import Status from "./ui/status"
 import Confirm from "./ui/confirm"
+import FloatingButton from "./button/floatingButton"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
@@ -124,13 +125,19 @@ export default function KategoriClient({ listKategori }){
     ]
     return (
         <>
-            <Button
-                onClick={handleTambah}
-                variant="add"
-                className="max-w-3xs"
-            >
-                Tambah Kategori
-            </Button>
+            <div className="hidden sm:block">
+                <Button
+                    onClick={handleTambah}
+                    variant="add"
+                    className="max-w-3xs"
+                >
+                    Tambah Kategori
+                </Button>
+            </div>
+
+            <div className="block sm:hidden">
+                <FloatingButton onClick={handleTambah}/>
+            </div>
 
             <Table
                 columns={header}
