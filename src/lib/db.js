@@ -8,8 +8,3 @@ const pool = new Pool({
 });
 
 export default pool;
-
-// "use server";
-// import { neon } from "@neondatabase/serverless";
-
-// export const sql = neon(process.env.DATABASE_URL);

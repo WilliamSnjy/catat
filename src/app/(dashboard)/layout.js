@@ -1,6 +1,6 @@
 "use client"
 
-import Sidebar from "../components/ui/sidebar"
+import BottomNav from "../components/ui/bottomNav"
 import Status from "../components/ui/status"
 import { useState } from "react"
 
@@ -12,10 +12,10 @@ export default function Layout({ children }) {
   })
 
   return (
-    <div className="flex min-h-screen">
-      <Sidebar setStatus={setStatus} />
+    <div className="flex flex-col min-h-screen">
+      <BottomNav setStatus={setStatus}/>
 
-      <main className="flex-1 p-5">
+      <main className="flex-1 p-5 pb-21">
         {children}
       </main>
 
