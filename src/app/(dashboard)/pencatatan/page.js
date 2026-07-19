@@ -41,7 +41,7 @@ export default async function Pencatatan({searchParams}) {
         )
     }
     return (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-2 sm:gap-6">
             <PencatatanClient 
                 listKategori={listKategori} 
                 listPencatatan={listPencatatan}
