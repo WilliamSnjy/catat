@@ -12,13 +12,7 @@ export default async function Riwayat(){
     const listRiwayat = await getRiwayat()
     return (
         <div className="flex">
-            <div className="flex flex-col gap-6">
-                <div className="text-2xl font-bold">
-                    Riwayat
-                </div>
-
-                <RiwayatClient listRiwayat={listRiwayat}/>
-            </div>
+            <RiwayatClient listRiwayat={listRiwayat}/>
         </div>
     )
 }

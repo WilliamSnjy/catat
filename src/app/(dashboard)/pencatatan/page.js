@@ -41,20 +41,14 @@ export default async function Pencatatan({searchParams}) {
         )
     }
     return (
-        <div className="flex">
-            <div className="flex flex-col gap-6">
-                <div className="text-2xl font-bold">
-                    Pencatatan
-                </div>
-
-                <PencatatanClient 
-                    listKategori={listKategori} 
-                    listPencatatan={listPencatatan}
-                    bulan={bulan}
-                    kategori={kategori}
-                    currentPage={page}
-                />
-            </div>
+        <div className="flex flex-col gap-6">
+            <PencatatanClient 
+                listKategori={listKategori} 
+                listPencatatan={listPencatatan}
+                bulan={bulan}
+                kategori={kategori}
+                currentPage={page}
+            />
         </div>
     )
 }

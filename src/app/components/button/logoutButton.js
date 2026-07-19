@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation"
+import { FiLogOut } from "react-icons/fi";
 
 export default function LogoutButton({ setStatus }) {
     const router = useRouter()
@@ -31,8 +32,17 @@ export default function LogoutButton({ setStatus }) {
 
     return (
         <>
-            <button onClick={handleLogout}>
-                Logout
+            <button
+                onClick={handleLogout}
+                className="flex flex-col items-center text-gray-500 hover:text-red-500 transition-colors"
+                >
+                <span className="text-xl">
+                    <FiLogOut />
+                </span>
+
+                <span className="hidden sm:block text-xs">
+                    Logout
+                </span>
             </button>
         </>
     )
