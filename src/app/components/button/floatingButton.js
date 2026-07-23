@@ -11,8 +11,9 @@ export default function FloatingButton({
             onClick={onClick}
             className="
                 fixed
-                bottom-11
-                right-41
+                bottom-12
+                left-1/2
+                -translate-x-1/2
                 w-12
                 h-12
                 rounded-full
